@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { getHeroById } from '../../selectors/getHeroById';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 export const HeroScreen = ({history}) =>{
     const {heroId} = useParams();
-    const hero = getHeroById(heroId);
-    console.log(hero)
+    //const hero = getHeroById(heroId);
+    
+    const hero = useMemo(() => getHeroById(heroId), [heroId])
+    
     if(!hero){
         return <Redirect to="/"/> 
     }
@@ -29,7 +31,7 @@ export const HeroScreen = ({history}) =>{
                 <img 
                     src={`../assets/heroes/${heroId}.jpg`}
                     alt={superhero}
-                    className="img-thumbnail"/>
+                    className="img-thumbnail animate__animated animate__fadeInLeft"/>
             </div> 
             <div className="col-8">
                 <h3>{superhero}</h3>
